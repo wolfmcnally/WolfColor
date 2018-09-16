@@ -9,6 +9,8 @@ A pure-Swift `Color` type (RGBA) and a library of conveniences for working with 
 
 ## Requirements
 
+Swift 4.2
+
 ## Installation
 
 WolfColor is available through [CocoaPods](https://cocoapods.org). To install
