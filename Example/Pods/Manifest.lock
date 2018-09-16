@@ -1,0 +1,43 @@
+PODS:
+  - ExtensibleEnumeratedName (1.0)
+  - WolfColor (0.1.0):
+    - ExtensibleEnumeratedName
+    - WolfNumerics
+    - WolfPipe
+    - WolfStrings
+  - WolfNumerics (1.0)
+  - WolfPipe (1.0)
+  - WolfStrings (0.1.0):
+    - ExtensibleEnumeratedName
+    - WolfNumerics
+    - WolfPipe
+
+DEPENDENCIES:
+  - ExtensibleEnumeratedName (from `../../ExtensibleEnumeratedName`)
+  - WolfColor (from `../`)
+  - WolfNumerics (from `../../WolfNumerics`)
+  - WolfPipe (from `../../WolfPipe`)
+  - WolfStrings (from `../../WolfStrings`)
+
+EXTERNAL SOURCES:
+  ExtensibleEnumeratedName:
+    :path: "../../ExtensibleEnumeratedName"
+  WolfColor:
+    :path: "../"
+  WolfNumerics:
+    :path: "../../WolfNumerics"
+  WolfPipe:
+    :path: "../../WolfPipe"
+  WolfStrings:
+    :path: "../../WolfStrings"
+
+SPEC CHECKSUMS:
+  ExtensibleEnumeratedName: e2be15c3841ede318c17a81fb07ca815a4011e88
+  WolfColor: 4e777e2a8ab604a632438241e597b81c69b2f220
+  WolfNumerics: 2f24ca5dc4b423c73e1fa18a3687176e964a65de
+  WolfPipe: 0b6ce8bc1911461f54e96474db86bca1411e4aa7
+  WolfStrings: 839bd21ba7f8dd481f3ae83018783279b7a7e238
+
+PODFILE CHECKSUM: a2a5a9a148f83aa014ddcd108bac789a78673518
+
+COCOAPODS: 1.6.0.beta.1
