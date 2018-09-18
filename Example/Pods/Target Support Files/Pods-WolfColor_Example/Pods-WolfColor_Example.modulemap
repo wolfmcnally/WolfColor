@@ -1,6 +1,0 @@
-framework module Pods_WolfColor_Example {
-  umbrella header "Pods-WolfColor_Example-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,6 +1,6 @@
 //
 //  WolfColorError.swift
-//  Pods
+//  WolfColor
 //
 //  Created by Wolf McNally on 9/15/18.
 //

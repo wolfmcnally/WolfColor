@@ -1,6 +1,0 @@
-framework module WolfStrings {
-  umbrella header "WolfStrings-umbrella.h"
-
-  export *
-  module * { export * }
-}

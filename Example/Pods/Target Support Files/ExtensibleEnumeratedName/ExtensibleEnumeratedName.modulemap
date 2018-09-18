@@ -1,6 +1,0 @@
-framework module ExtensibleEnumeratedName {
-  umbrella header "ExtensibleEnumeratedName-umbrella.h"
-
-  export *
-  module * { export * }
-}

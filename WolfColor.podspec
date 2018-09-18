@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'WolfColor'
-    s.version          = '0.1.0'
+    s.version          = '1.0'
     s.summary          = 'A pure-Swift `Color` type (RGBA) and a library of conveniences for working with UIColor, CGColor, NSColor, blends, and gradients.'
 
     # s.description      = <<-DESC

@@ -1,6 +1,0 @@
-framework module WolfColor {
-  umbrella header "WolfColor-umbrella.h"
-
-  export *
-  module * { export * }
-}
