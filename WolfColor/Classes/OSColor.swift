@@ -22,6 +22,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import WolfNumerics
+
 #if canImport(AppKit)
 import AppKit
 public typealias OSColor = NSColor
@@ -51,3 +53,25 @@ extension UIColor {
     }
 }
 #endif
+
+extension OSColor: Interpolable {
+    public func interpolated(to other: OSColor, at frac: Frac) -> Self {
+        var thisR: CGFloat = 0
+        var thisG: CGFloat = 0
+        var thisB: CGFloat = 0
+        var thisA: CGFloat = 0
+        getRed(&thisR, green: &thisG, blue: &thisB, alpha: &thisA)
+
+        var endR: CGFloat = 0
+        var endG: CGFloat = 0
+        var endB: CGFloat = 0
+        var endA: CGFloat = 0
+        other.getRed(&endR, green: &endG, blue: &endB, alpha: &endA)
+
+        let r = thisR.interpolated(to: endR, at: frac)
+        let g = thisG.interpolated(to: endG, at: frac)
+        let b = thisB.interpolated(to: endB, at: frac)
+        let a = thisA.interpolated(to: endA, at: frac)
+        return type(of: self).init(red: r, green: g, blue: b, alpha: a)
+    }
+}

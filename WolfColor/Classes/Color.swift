@@ -31,16 +31,6 @@ import WolfStrings
     import Glibc
 #endif
 
-//public protocol ColorProtocol {
-//    var luminance: Frac { get }
-//    func multiplied(by rhs: Frac) -> Self
-//    func added(to rhs: Self) -> Self
-//    func lightened(by frac: Frac) -> Self
-//    func darkened(by frac: Frac) -> Self
-//    func dodged(by frac: Frac) -> Self
-//    func burned(by frac: Frac) -> Self
-//}
-
 // rgb
 // #rgb
 //
@@ -223,11 +213,20 @@ public struct Color: Codable {
         }
     }
 
-    public static func random(random: Random = Random.shared, alpha: Frac = 1.0) -> Color {
+    public static func random(alpha: Frac = 1.0) -> Color {
         return Color(
-            red: random.number(),
-            green: random.number(),
-            blue: random.number(),
+            red: Double.randomFrac(),
+            green: Double.randomFrac(),
+            blue: Double.randomFrac(),
+            alpha: alpha
+        )
+    }
+
+    public static func random<T>(alpha: Frac = 1.0, using generator: inout T) -> Color where T: RandomNumberGenerator {
+        return Color(
+            red: Double.randomFrac(using: &generator),
+            green: Double.randomFrac(using: &generator),
+            blue: Double.randomFrac(using: &generator),
             alpha: alpha
         )
     }
@@ -388,5 +387,11 @@ public func + (lhs: Color, rhs: Color) -> Color {
 extension Color {
     public func blend(to color: Color, at frac: Frac) -> Color {
         return WolfColor.blend(from: self, to: color, at: frac)
+    }
+}
+
+extension Color: Interpolable {
+    public func interpolated(to other: Color, at frac: Frac) -> Color {
+        return blend(to: other, at: frac)
     }
 }
