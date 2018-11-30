@@ -25,6 +25,7 @@
 import Foundation
 import WolfPipe
 import WolfNumerics
+import WolfFoundation
 import WolfStrings
 
 #if canImport(Glibc)
