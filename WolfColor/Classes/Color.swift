@@ -152,14 +152,14 @@ public struct Color: Codable {
 
     private static func components(forSingleHexStrings strings: [String], components: inout [Double]) throws {
         for (index, string) in strings.enumerated() {
-            let i = try (string |> fromHex)[0]
+            let i = try (string |> tagHex |> toData)[0]
             components[index] = Double(i) / 15.0
         }
     }
 
     private static func components(forDoubleHexStrings strings: [String], components: inout [Double]) throws {
         for (index, string) in strings.enumerated() {
-            let i = try (string |> fromHex)[0]
+            let i = try (string |> tagHex |> toData)[0]
             components[index] = Double(i) / 255.0
         }
     }
