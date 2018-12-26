@@ -25,36 +25,6 @@
 import WolfNumerics
 
 #if canImport(AppKit)
-import AppKit
-public typealias OSColor = NSColor
-#elseif canImport(UIKit)
-import UIKit
-public typealias OSColor = UIColor
-#endif
-
-#if !os(macOS)
-import ExtensibleEnumeratedName
-
-@available(iOS 11.0, *)
-extension UIColor {
-    public struct Name: ExtensibleEnumeratedName {
-        public let rawValue: String
-
-        public init(_ rawValue: String) {
-            self.rawValue = rawValue
-        }
-
-        // RawRepresentable
-        public init?(rawValue: String) { self.init(rawValue) }
-    }
-
-    public convenience init?(named name: UIColor.Name) {
-        self.init(named: name.rawValue)
-    }
-}
-#endif
-
-#if canImport(AppKit)
 extension NSColor {
     public func interpolated(to other: NSColor, at frac: Frac) -> NSColor {
         var thisR: CGFloat = 0

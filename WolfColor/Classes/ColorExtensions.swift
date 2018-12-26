@@ -29,6 +29,7 @@
 #endif
 import WolfPipe
 import WolfNumerics
+import WolfOSBridge
 
 extension OSColor {
     public convenience init(_ color: Color) {
