@@ -366,10 +366,10 @@ extension Color {
         case (1, 1, 0, _):
             joiner.append("yellow")
         default:
-            joiner.append("r:\(red %% 2) g:\(green %% 2) b:\(blue %% 2)")
+            joiner.append("r:\(String(value: red, precision: 2)) g:\(String(value: green, precision: 2)) b:\(String(value: blue, precision: 2))")
         }
         if needAlpha && alpha < 1.0 {
-            joiner.append("a: \(alpha %% 2)")
+            joiner.append("a: \(String(value: alpha, precision: 2))")
         }
         return joiner.description
     }

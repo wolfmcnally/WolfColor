@@ -77,26 +77,6 @@ extension String {
     }
 }
 
-precedencegroup AttributeAssignmentPrecedence {
-    associativity: left
-    higherThan: AssignmentPrecedence
-    lowerThan: ComparisonPrecedence
-}
-
-infix operator %% : AttributeAssignmentPrecedence
-
-func %% (left: Double, right: Int) -> String {
-    return String(value: left, precision: right)
-}
-
-func %% (left: Float, right: Int) -> String {
-    return String(value: left, precision: right)
-}
-
-func %% (left: CGFloat, right: Int) -> String {
-    return String(value: left, precision: right)
-}
-
 typealias TextCheckingResult = NSTextCheckingResult
 typealias StringIndex = String.Index
 typealias StringRange = Range<StringIndex>
