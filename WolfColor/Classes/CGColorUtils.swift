@@ -80,3 +80,11 @@ extension Color {
         return CGColor(colorSpace: sharedColorSpaceRGB, components: [CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha)])!
     }
 }
+
+public func toCGColor(_ c: Color) -> CGColor {
+    return c.cgColor
+}
+
+public func toColor(_ c: CGColor) -> Color {
+    return Color(cgColor: c)
+}

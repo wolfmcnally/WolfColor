@@ -119,35 +119,6 @@ public struct Color: Codable {
         self.alpha = alpha
     }
 
-    public init(hue h: Frac, saturation s: Frac, brightness v: Frac, alpha a: Frac = 1.0) {
-        let v = v.clamped()
-        let s = s.clamped()
-        alpha = a
-        if s <= 0.0 {
-            red = v
-            green = v
-            blue = v
-        } else {
-            var h = h.truncatingRemainder(dividingBy: 1.0)
-            if h < 0.0 { h += 1.0 }
-            h *= 6.0
-            let i = Int(floor(h))
-            let f = h - Double(i)
-            let p = v * (1.0 - s)
-            let q = v * (1.0 - (s * f))
-            let t = v * (1.0 - (s * (1.0 - f)))
-            switch i {
-            case 0: red = v; green = t; blue = p
-            case 1: red = q; green = v; blue = p
-            case 2: red = p; green = v; blue = t
-            case 3: red = p; green = q; blue = v
-            case 4: red = t; green = p; blue = v
-            case 5: red = v; green = p; blue = q
-            default: red = 0; green = 0; blue = 0; assert(false, "unknown hue sector")
-            }
-        }
-    }
-
     private static func components(forSingleHexStrings strings: [String], components: inout [Double]) throws {
         for (index, string) in strings.enumerated() {
             let i = try (string |> tagHex |> toData)[0]
@@ -206,7 +177,7 @@ public struct Color: Codable {
         }
 
         if isHSB {
-            self.init(hue: components[0], saturation: components[1], brightness: components[2], alpha: components[3])
+            self = HSBColor(hue: components[0], saturation: components[1], brightness: components[2], alpha: components[3]) |> toColor
         } else {
             self.init(red: components[0], green: components[1], blue: components[2], alpha: components[3])
         }

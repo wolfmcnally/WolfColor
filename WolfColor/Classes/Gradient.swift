@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import WolfNumerics
+import WolfPipe
 
 public struct ColorFrac: Equatable {
     public let color: Color
@@ -232,7 +233,7 @@ public struct Gradient {
 
 
     public static func hues(frac: Double) -> Color {
-        return Color(hue: frac, saturation: 1, brightness: 1)
+        return HSBColor(hue: frac, saturation: 1, brightness: 1) |> toColor
     }
 
     public static let gradients: [ColorFunc] = [

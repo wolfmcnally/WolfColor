@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import WolfNumerics
+import WolfPipe
 
 public struct ColorFuncOptions: OptionSet {
     public let rawValue: UInt32
@@ -186,20 +187,20 @@ public func reverse(colorFunc: @escaping ColorFunc) -> ColorFunc {
 public func tints(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return Color(hue: hue, saturation: 1.0 - f, brightness: 1)
+        return HSBColor(hue: hue, saturation: 1.0 - f, brightness: 1) |> toColor
     }
 }
 
 public func shades(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return Color(hue: hue, saturation: 1.0, brightness: 1.0 - f)
+        return HSBColor(hue: hue, saturation: 1.0, brightness: 1.0 - f) |> toColor
     }
 }
 
 public func tones(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return Color(hue: hue, saturation: 1.0 - f, brightness: f.lerpedFromFrac(to: 1.0..0.5))
+        return HSBColor(hue: hue, saturation: 1.0 - f, brightness: f.lerpedFromFrac(to: 1.0..0.5)) |> toColor
     }
 }
