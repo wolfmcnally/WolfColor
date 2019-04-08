@@ -5,8 +5,7 @@
 //  Created by Wolf McNally on 1/9/19.
 //
 
-import WolfNumerics
-import WolfPipe
+import WolfCore
 
 public struct LABColor: Codable {
     public var l: Double

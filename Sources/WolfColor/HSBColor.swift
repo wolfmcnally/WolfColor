@@ -5,8 +5,7 @@
 //  Created by Wolf McNally on 1/10/19.
 //
 
-import WolfNumerics
-import WolfPipe
+import WolfCore
 
 public struct HSBColor: Codable {
     public var hue: Frac

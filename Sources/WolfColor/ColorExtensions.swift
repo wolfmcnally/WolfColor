@@ -27,9 +27,7 @@
 #elseif canImport(UIKit)
     import UIKit
 #endif
-import WolfPipe
-import WolfNumerics
-import WolfOSBridge
+import WolfCore
 
 extension OSColor {
     public convenience init(_ color: Color) {

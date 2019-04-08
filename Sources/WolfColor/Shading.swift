@@ -23,7 +23,7 @@
 //  SOFTWARE.
 
 import CoreGraphics
-import WolfNumerics
+import WolfCore
 
 public class Shading {
     public typealias CallbackBlock = (_ frac: Frac) -> Color

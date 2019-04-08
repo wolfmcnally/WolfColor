@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'WolfColor'
-    s.version          = '4.0.0'
+    s.version          = '4.0.1'
     s.summary          = 'A pure-Swift `Color` type (RGBA) and a library of conveniences for working with UIColor, CGColor, NSColor, blends, and gradients.'
 
     # s.description      = <<-DESC
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.author           = { 'Wolf McNally' => 'wolf@wolfmcnally.com' }
     s.source           = { :git => 'https://github.com/wolfmcnally/WolfColor.git', :tag => s.version.to_s }
 
-    s.source_files = 'WolfColor/Classes/**/*'
+    s.source_files = 'Sources/WolfColor/**/*'
 
     s.swift_version = '5.0'
 
@@ -22,8 +22,5 @@ Pod::Spec.new do |s|
 
     s.module_name = 'WolfColor'
 
-    s.dependency 'WolfPipe'
-    s.dependency 'WolfNumerics'
-    s.dependency 'WolfFoundation'
-    s.dependency 'WolfOSBridge'
+    s.dependency 'WolfCore'
 end
