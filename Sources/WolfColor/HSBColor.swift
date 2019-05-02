@@ -51,7 +51,10 @@ extension Color {
     public init(_ hsb: HSBColor) {
         let v = hsb.brightness.clamped()
         let s = hsb.saturation.clamped()
-        alpha = hsb.alpha
+        let red: Frac
+        let green: Frac
+        let blue: Frac
+        let alpha = hsb.alpha
         if s <= 0.0 {
             red = v
             green = v
@@ -75,6 +78,7 @@ extension Color {
             default: red = 0; green = 0; blue = 0; assert(false, "unknown hue sector")
             }
         }
+        self = [red, green, blue, alpha]
     }
 }
 

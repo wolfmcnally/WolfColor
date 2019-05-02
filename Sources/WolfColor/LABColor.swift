@@ -55,10 +55,11 @@ extension Color {
         let g2 = (g > 0.0031308) ? (1.055 * pow(g, 1/2.4) - 0.055) : 12.92 * g
         let b2 = (b > 0.0031308) ? (1.055 * pow(b, 1/2.4) - 0.055) : 12.92 * b
 
-        red = max(0, min(1, r2))
-        green = max(0, min(1, g2))
-        blue = max(0, min(1, b2))
-        alpha = lab.alpha
+        let red = max(0, min(1, r2))
+        let green = max(0, min(1, g2))
+        let blue = max(0, min(1, b2))
+        let alpha = lab.alpha
+        self = [red, green, blue, alpha]
     }
 }
 

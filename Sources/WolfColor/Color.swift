@@ -66,43 +66,62 @@ private let labeledColorRegex = try! NSRegularExpression(pattern: "^\\s*(?:r(?:e
 private let labeledHSBColorRegex = try! NSRegularExpression(pattern: "^\\s*(?:h(?:ue)?):\\s+(?<h>\\d*(?:\\.\\d+)?)\\s+(?:s(?:aturation)?):\\s+(?<s>\\d*(?:\\.\\d+)?)\\s+(?:b(?:rightness)?):\\s+(?<b>\\d*(?:\\.\\d+)?)(?:\\s+(?:a(?:lpha)?):\\s+(?<a>\\d*(?:\\.\\d+)?))?")
 
 public struct Color: Codable {
-    public var red: Frac
-    public var green: Frac
-    public var blue: Frac
-    public var alpha: Frac
+    public var c: SIMD4<Frac>
+
+    @inlinable public var red: Frac {
+        get { return c.x }
+        set { c.x = newValue }
+    }
+
+    @inlinable public var green: Frac {
+        get { return c.y }
+        set { c.y = newValue }
+    }
+
+    @inlinable public var blue: Frac {
+        get { return c.z }
+        set { c.z = newValue }
+    }
+
+    @inlinable public var alpha: Frac {
+        get { return c.w }
+        set { c.w = newValue }
+    }
 
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        let stringValue = "\(red) \(green) \(blue) \(alpha)"
-        try container.encode(stringValue)
+        var container = encoder.unkeyedContainer()
+        try container.encode(red)
+        try container.encode(green)
+        try container.encode(blue)
+        try container.encode(alpha)
     }
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        try self.init(string: stringValue)
+        var container = try decoder.unkeyedContainer()
+        let red = try container.decode(Frac.self)
+        let green = try container.decode(Frac.self)
+        let blue = try container.decode(Frac.self)
+        let alpha = try container.decode(Frac.self)
+        c = [red, green, blue, alpha]
     }
 
-    public init(red: Frac, green: Frac, blue: Frac, alpha: Frac = 1.0) {
-        self.red = red
-        self.green = green
-        self.blue = blue
-        self.alpha = alpha
+    @inlinable public init(red: Frac, green: Frac, blue: Frac, alpha: Frac = 1.0) {
+        c = [red, green, blue, alpha]
     }
 
-    public init(redByte: UInt8, greenByte: UInt8, blueByte: UInt8, alphaByte: UInt8 = 255) {
-        self.init(red: Double(redByte) / 255.0,
-                  green: Double(greenByte) / 255.0,
-                  blue: Double(blueByte) / 255.0,
-                  alpha: Double(alphaByte) / 255.0
-        )
+    @inlinable public init(redByte: UInt8, greenByte: UInt8, blueByte: UInt8, alphaByte: UInt8 = 255) {
+        let red = Frac(redByte) / 255.0
+        let green = Frac(greenByte) / 255.0
+        let blue = Frac(blueByte) / 255.0
+        let alpha = Frac(alphaByte) / 255.0
+        c = [red, green, blue, alpha]
     }
 
-    public init(white: Frac, alpha: Frac = 1.0) {
-        self.init(red: white, green: white, blue: white, alpha: alpha)
+    @inlinable public init(white: Frac, alpha: Frac = 1.0) {
+        c = [white, white, white, alpha]
     }
 
-    public init(data: Data) {
+    @inlinable public init(data: Data) {
         let r = data[0]
         let g = data[1]
         let b = data[2]
@@ -110,11 +129,8 @@ public struct Color: Codable {
         self.init(redByte: r, greenByte: g, blueByte: b, alphaByte: a)
     }
 
-    public init(color: Color, alpha: Frac) {
-        self.red = color.red
-        self.green = color.green
-        self.blue = color.blue
-        self.alpha = alpha
+    @inlinable public init(color: Color, alpha: Frac) {
+        c = [color.red, color.green, color.blue, alpha]
     }
 
     private static func components(forSingleHexStrings strings: [String], components: inout [Double]) throws {
@@ -291,6 +307,14 @@ public struct Color: Codable {
     public static let blueGreen = Color(redByte: 0, greenByte: 169, blueByte: 149)
     public static let mediumBlue = Color(redByte: 0, greenByte: 110, blueByte: 185)
     public static let deepBlue = Color(redByte: 60, greenByte: 55, blueByte: 149)
+}
+
+extension Color: ExpressibleByArrayLiteral {
+    public typealias ArrayLiteralElement = Frac
+
+    public init(arrayLiteral elements: Frac...) {
+        c = SIMD4<Frac>(elements[0], elements[1], elements[2], elements[3])
+    }
 }
 
 extension Color: Equatable { }
