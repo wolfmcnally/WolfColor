@@ -8,32 +8,47 @@
 import WolfCore
 
 public struct HSBColor: Codable {
-    public var hue: Frac
-    public var saturation: Frac
-    public var brightness: Frac
-    public var alpha: Frac
+    public var c: SIMD4<Frac>
 
-    public init(hue: Frac, saturation: Frac, brightness: Frac, alpha: Frac = 1) {
-        self.hue = hue
-        self.saturation = saturation
-        self.brightness = brightness
-        self.alpha = alpha
+    @inlinable public var hue: Frac {
+        get { return c[0] }
+        set { c[0] = newValue }
+    }
+
+    @inlinable public var saturation: Frac {
+        get { return c[1] }
+        set { c[1] = newValue }
+    }
+
+    @inlinable public var brightness: Frac {
+        get { return c[2] }
+        set { c[2] = newValue }
+    }
+
+    @inlinable public var alpha: Frac {
+        get { return c[3] }
+        set { c[3] = newValue }
+    }
+
+    @inlinable public init(hue: Frac, saturation: Frac, brightness: Frac, alpha: Frac = 1) {
+        c = [hue, saturation, brightness, alpha]
     }
 
     public init(_ color: Color) {
         let r = color.red
         let g = color.green
         let b = color.blue
-        alpha = color.alpha
+        let alpha = color.alpha
 
         let maxValue = max(r, g, b)
         let minValue = min(r, g, b)
 
-        brightness = maxValue
+        let brightness = maxValue
 
         let d = maxValue - minValue;
-        saturation = maxValue == 0 ? 0 : d / maxValue
+        let saturation = maxValue == 0 ? 0 : d / maxValue
 
+        let hue: Frac
         if (maxValue == minValue) {
             hue = 0 // achromatic
         } else {
@@ -44,6 +59,7 @@ public struct HSBColor: Codable {
             default: fatalError()
             }
         }
+        c = [hue, saturation, brightness, alpha]
     }
 }
 
@@ -82,10 +98,10 @@ extension Color {
     }
 }
 
-public func toHSBColor(_ c: Color) -> HSBColor {
+@inlinable public func toHSBColor(_ c: Color) -> HSBColor {
     return HSBColor(c)
 }
 
-public func toColor(_ c: HSBColor) -> Color {
+@inlinable public func toColor(_ c: HSBColor) -> Color {
     return Color(c)
 }

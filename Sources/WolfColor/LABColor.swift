@@ -8,32 +8,49 @@
 import WolfCore
 
 public struct LABColor: Codable {
-    public var l: Double
-    public var a: Double
-    public var b: Double
-    public var alpha: Frac
+    public var c: SIMD4<Frac>
 
-    public init(l: Double, a: Double, b: Double, alpha: Frac = 1) {
-        self.l = l
-        self.a = a
-        self.b = b
-        self.alpha = alpha
+    @inlinable public var l: Double {
+        get { return c[0] }
+        set { c[0] = newValue }
+    }
+
+    @inlinable public var a: Double {
+        get { return c[1] }
+        set { c[1] = newValue }
+    }
+
+    @inlinable public var b: Double {
+        get { return c[2] }
+        set { c[2] = newValue }
+    }
+
+    @inlinable public var alpha: Frac {
+        get { return c[3] }
+        set { c[3] = newValue }
+    }
+
+    @inlinable public init(l: Double, a: Double, b: Double, alpha: Frac = 1) {
+        c = [l, a, b, alpha]
     }
 
     public init(_ color: Color) {
-        let r = (color.red > 0.04045) ? pow((color.red + 0.055) / 1.055, 2.4) : color.red / 12.92
-        let g = (color.green > 0.04045) ? pow((color.green + 0.055) / 1.055, 2.4) : color.green / 12.92
-        let b = (color.blue > 0.04045) ? pow((color.blue + 0.055) / 1.055, 2.4) : color.blue / 12.92
+        let red = (color.red > 0.04045) ? pow((color.red + 0.055) / 1.055, 2.4) : color.red / 12.92
+        let green = (color.green > 0.04045) ? pow((color.green + 0.055) / 1.055, 2.4) : color.green / 12.92
+        let blue = (color.blue > 0.04045) ? pow((color.blue + 0.055) / 1.055, 2.4) : color.blue / 12.92
 
-        let x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047
-        let y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000
-        let z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883
+        let x = (red * 0.4124 + green * 0.3576 + blue * 0.1805) / 0.95047
+        let y = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 1.00000
+        let z = (red * 0.0193 + green * 0.1192 + blue * 0.9505) / 1.08883
 
         let x2 = (x > 0.008856) ? pow(x, 1/3) : (7.787 * x) + 16/116
         let y2 = (y > 0.008856) ? pow(y, 1/3) : (7.787 * y) + 16/116
         let z2 = (z > 0.008856) ? pow(z, 1/3) : (7.787 * z) + 16/116
 
-        self = LABColor(l: (116 * y2) - 16, a: 500 * (x2 - y2), b: 200 * (y2 - z2), alpha: color.alpha)
+        let l = (116 * y2) - 16
+        let a = 500 * (x2 - y2)
+        let b = 200 * (y2 - z2)
+        c = [l, a, b, color.alpha]
     }
 }
 
@@ -63,11 +80,11 @@ extension Color {
     }
 }
 
-public func toLABColor(_ c: Color) -> LABColor {
+@inlinable public func toLABColor(_ c: Color) -> LABColor {
     return LABColor(c)
 }
 
-public func toColor(_ c: LABColor) -> Color {
+@inlinable public func toColor(_ c: LABColor) -> Color {
     return Color(c)
 }
 
@@ -87,6 +104,6 @@ public func settingL(toMatch source: Color) -> (_ target: Color) -> Color {
 
 extension LABColor: CustomStringConvertible {
     public var description: String {
-        return "LABColor(l: \(l), a: \(a), b: \(b)"
+        return "LABColor(l: \(l), a: \(a), b: \(b), alpha: \(alpha))"
     }
 }

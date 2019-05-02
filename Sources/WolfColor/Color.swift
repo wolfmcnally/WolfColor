@@ -69,23 +69,23 @@ public struct Color: Codable {
     public var c: SIMD4<Frac>
 
     @inlinable public var red: Frac {
-        get { return c.x }
-        set { c.x = newValue }
+        get { return c[0] }
+        set { c[0] = newValue }
     }
 
     @inlinable public var green: Frac {
-        get { return c.y }
-        set { c.y = newValue }
+        get { return c[1] }
+        set { c[1] = newValue }
     }
 
     @inlinable public var blue: Frac {
-        get { return c.z }
-        set { c.z = newValue }
+        get { return c[2] }
+        set { c[2] = newValue }
     }
 
     @inlinable public var alpha: Frac {
-        get { return c.w }
-        set { c.w = newValue }
+        get { return c[3] }
+        set { c[3] = newValue }
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -368,11 +368,11 @@ extension Color {
     }
 }
 
-public func * (lhs: Color, rhs: Frac) -> Color {
+@inlinable public func * (lhs: Color, rhs: Frac) -> Color {
     return lhs.multiplied(by: rhs)
 }
 
-public func + (lhs: Color, rhs: Color) -> Color {
+@inlinable public func + (lhs: Color, rhs: Color) -> Color {
     return lhs.added(to: rhs)
 }
 
