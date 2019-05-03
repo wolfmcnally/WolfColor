@@ -88,10 +88,14 @@ public struct Gradient {
     public func at(_ frac: Frac) -> Color {
         return colorFunc(frac)
     }
+
+    public var reversed: Gradient {
+        return Gradient({ return self.colorFunc(1 - $0) })
+    }
 }
 
 public func reversed(_ gradient: Gradient) -> Gradient {
-    return Gradient({ return gradient.colorFunc(1 - $0) })
+    return gradient.reversed
 }
 
 extension Gradient {

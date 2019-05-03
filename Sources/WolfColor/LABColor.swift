@@ -8,18 +8,24 @@
 import WolfCore
 
 public struct LABColor: Codable {
-    public var c: SIMD4<Frac>
+    public var c: SIMD4<Double>
 
+    public static let minL = 0.0        // Darkest black
+    public static let maxL = 100.0      // Brightest white
     @inlinable public var l: Double {
         get { return c[0] }
         set { c[0] = newValue }
     }
 
+    public static let minA = -100.0     // Green
+    public static let maxA = 100.0      // Red
     @inlinable public var a: Double {
         get { return c[1] }
         set { c[1] = newValue }
     }
 
+    public static let minB = -100.0     // Blue
+    public static let maxB = 100.0      // Yellow
     @inlinable public var b: Double {
         get { return c[2] }
         set { c[2] = newValue }
