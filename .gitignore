@@ -21,6 +21,8 @@ DerivedData
 
 # Bundler
 .bundle
+.swiftpm
+Package.resolved
 
 Carthage/Build
 Pods/
