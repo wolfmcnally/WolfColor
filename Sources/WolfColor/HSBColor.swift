@@ -6,6 +6,7 @@
 //
 
 import WolfCore
+import Foundation
 
 public struct HSBColor: Codable {
     public var c: SIMD4<Frac>

@@ -23,6 +23,7 @@
 //  SOFTWARE.
 
 import CoreGraphics
+import Foundation
 
 extension String {
     init(value: Double, precision: Int) {

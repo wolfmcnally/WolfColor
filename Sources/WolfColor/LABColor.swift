@@ -6,6 +6,7 @@
 //
 
 import WolfCore
+import Foundation
 
 public struct LABColor: Codable {
     public var c: SIMD4<Double>

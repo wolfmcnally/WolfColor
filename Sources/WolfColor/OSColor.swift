@@ -25,6 +25,7 @@
 import WolfCore
 
 #if canImport(AppKit)
+import AppKit
 extension NSColor {
     public func interpolated(to other: NSColor, at frac: Frac) -> NSColor {
         var thisR: CGFloat = 0
@@ -47,6 +48,7 @@ extension NSColor {
     }
 }
 #elseif canImport(UIKit)
+import UIKit
 extension UIColor: Interpolable {
     public func interpolated(to other: UIColor, at frac: Frac) -> Self {
         var thisR: CGFloat = 0
