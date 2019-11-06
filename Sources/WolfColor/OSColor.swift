@@ -24,30 +24,7 @@
 
 import WolfCore
 
-#if canImport(AppKit)
-import AppKit
-extension NSColor {
-    public func interpolated(to other: NSColor, at frac: Frac) -> NSColor {
-        var thisR: CGFloat = 0
-        var thisG: CGFloat = 0
-        var thisB: CGFloat = 0
-        var thisA: CGFloat = 0
-        getRed(&thisR, green: &thisG, blue: &thisB, alpha: &thisA)
-
-        var endR: CGFloat = 0
-        var endG: CGFloat = 0
-        var endB: CGFloat = 0
-        var endA: CGFloat = 0
-        other.getRed(&endR, green: &endG, blue: &endB, alpha: &endA)
-
-        let r = thisR.interpolated(to: endR, at: frac)
-        let g = thisG.interpolated(to: endG, at: frac)
-        let b = thisB.interpolated(to: endB, at: frac)
-        let a = thisA.interpolated(to: endA, at: frac)
-        return NSColor(red: r, green: g, blue: b, alpha: a)
-    }
-}
-#elseif canImport(UIKit)
+#if canImport(UIKit)
 import UIKit
 extension UIColor: Interpolable {
     public func interpolated(to other: UIColor, at frac: Frac) -> Self {
@@ -68,6 +45,29 @@ extension UIColor: Interpolable {
         let b = thisB.interpolated(to: endB, at: frac)
         let a = thisA.interpolated(to: endA, at: frac)
         return type(of: self).init(red: r, green: g, blue: b, alpha: a)
+    }
+}
+#elseif canImport(AppKit)
+import AppKit
+extension NSColor {
+    public func interpolated(to other: NSColor, at frac: Frac) -> NSColor {
+        var thisR: CGFloat = 0
+        var thisG: CGFloat = 0
+        var thisB: CGFloat = 0
+        var thisA: CGFloat = 0
+        getRed(&thisR, green: &thisG, blue: &thisB, alpha: &thisA)
+
+        var endR: CGFloat = 0
+        var endG: CGFloat = 0
+        var endB: CGFloat = 0
+        var endA: CGFloat = 0
+        other.getRed(&endR, green: &endG, blue: &endB, alpha: &endA)
+
+        let r = thisR.interpolated(to: endR, at: frac)
+        let g = thisG.interpolated(to: endG, at: frac)
+        let b = thisB.interpolated(to: endB, at: frac)
+        let a = thisA.interpolated(to: endA, at: frac)
+        return NSColor(red: r, green: g, blue: b, alpha: a)
     }
 }
 #endif

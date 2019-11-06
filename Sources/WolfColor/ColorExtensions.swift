@@ -22,10 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#if canImport(AppKit)
-    import AppKit
-#elseif canImport(UIKit)
-    import UIKit
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 import WolfCore
 
@@ -213,12 +213,12 @@ extension Color {
         return OSColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
     }
 
-    #if canImport(AppKit)
-    public var nsColor: NSColor {
+    #if canImport(UIKit)
+    public var uiColor: UIColor {
         return osColor
     }
-    #elseif canImport(UIKit)
-    public var uiColor: UIColor {
+    #elseif canImport(AppKit)
+    public var nsColor: NSColor {
         return osColor
     }
     #endif
