@@ -22,8 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import WolfCore
 import Foundation
+import WolfNumerics
+import WolfPipe
+import WolfFoundation
 
 #if canImport(Glibc)
     import Glibc

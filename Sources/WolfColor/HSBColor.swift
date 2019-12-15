@@ -5,8 +5,8 @@
 //  Created by Wolf McNally on 1/10/19.
 //
 
-import WolfCore
 import Foundation
+import WolfNumerics
 
 public struct HSBColor: Codable {
     public var c: SIMD4<Frac>

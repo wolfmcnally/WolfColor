@@ -22,6 +22,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import WolfOSBridge
+import WolfPipe
+
 #if canImport(AppKit)
     import AppKit
 #elseif canImport(UIKit)
@@ -29,7 +32,6 @@
 #endif
 
 import CoreGraphics
-import WolfCore
 
 public var sharedColorSpaceRGB = CGColorSpaceCreateDeviceRGB()
 public var sharedColorSpaceGray = CGColorSpaceCreateDeviceGray()

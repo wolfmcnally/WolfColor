@@ -5,8 +5,9 @@
 //  Created by Wolf McNally on 1/9/19.
 //
 
-import WolfCore
 import Foundation
+import WolfNumerics
+import WolfPipe
 
 public struct LABColor: Codable {
     public var c: SIMD4<Double>

@@ -13,11 +13,19 @@ let package = Package(
             targets: ["WolfColor"]),
         ],
     dependencies: [
-        .package(url: "https://github.com/wolfmcnally/WolfCore", from: "5.0.0")
+        .package(url: "https://github.com/wolfmcnally/WolfNumerics", from: "4.0.0"),
+        .package(url: "https://github.com/wolfmcnally/WolfOSBridge", from: "2.0.0"),
+        .package(url: "https://github.com/wolfmcnally/WolfPipe", from: "2.0.0"),
+        .package(url: "https://github.com/wolfmcnally/WolfFoundation", from: "5.0.0"),
     ],
     targets: [
         .target(
             name: "WolfColor",
-            dependencies: ["WolfCore"])
+            dependencies: [
+                "WolfNumerics",
+                "WolfOSBridge",
+                "WolfPipe",
+                "WolfFoundation"
+        ])
         ]
 )
