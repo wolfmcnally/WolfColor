@@ -9,7 +9,6 @@ let package = Package(
     products: [
         .library(
             name: "WolfColor",
-            type: .dynamic,
             targets: ["WolfColor"]),
     ],
     dependencies: [
