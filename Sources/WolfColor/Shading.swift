@@ -23,10 +23,9 @@
 //  SOFTWARE.
 
 import CoreGraphics
-import WolfNumerics
 
 public class Shading {
-    public typealias CallbackBlock = (_ frac: Frac) -> Color
+    public typealias CallbackBlock = (_ frac: Double) -> Color
     private typealias `Self` = Shading
 
     public private(set) var cgShading: CGShading!
@@ -37,7 +36,7 @@ public class Shading {
         self.callback = callback
         var callbacks = CGFunctionCallbacks(version: 0, evaluate: { (info, inData, outData) in
             let me = Unmanaged<Self>.fromOpaque(info!).takeUnretainedValue()
-            let frac = Frac(inData[0])
+            let frac = Double(inData[0])
             let color = me.callback(frac)
             let components = color.cgColor.components!
             for i in 0 ..< me.numComponents {
@@ -52,7 +51,7 @@ public class Shading {
         self.callback = callback
         var callbacks = CGFunctionCallbacks(version: 0, evaluate: { (info, inData, outData) in
             let me = Unmanaged<Self>.fromOpaque(info!).takeUnretainedValue()
-            let frac = Frac(inData[0])
+            let frac = Double(inData[0])
             let color = me.callback(frac)
             let components = color.cgColor.components!
             for i in 0 ..< me.numComponents {

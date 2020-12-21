@@ -22,14 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import WolfNumerics
-import WolfPipe
-
 public struct ColorFrac: Equatable {
     public let color: Color
     public let frac: Double
 
-    public init(_ color: Color, _ frac: Frac) {
+    public init(_ color: Color, _ frac: Double) {
         self.color = color
         self.frac = frac
     }
@@ -44,7 +41,7 @@ public struct ColorFracHandle: Equatable {
     public let frac: Double
     public let handle: Double
 
-    public init(_ color: Color, _ frac: Frac, _ handle: Double) {
+    public init(_ color: Color, _ frac: Double, _ handle: Double) {
         self.color = color
         self.frac = frac
         self.handle = handle
@@ -86,7 +83,7 @@ public struct Gradient {
         self.colorFunc = colorFunc
     }
 
-    public func at(_ frac: Frac) -> Color {
+    public func at(_ frac: Double) -> Color {
         return colorFunc(frac)
     }
 
@@ -248,7 +245,7 @@ extension Gradient {
         Color(redByte: 253, greenByte: 233, blueByte: 43),
         Color(redByte: 0, greenByte: 158, blueByte: 84)
         ]))
-    public static let hues = Gradient({ HSBColor(hue: $0, saturation: 1, brightness: 1) |> toColor })
+    public static let hues = Gradient({ Color(HSBColor(hue: $0, saturation: 1, brightness: 1)) })
 
     public static let gradients: [Gradient] = [
         .grayscale,

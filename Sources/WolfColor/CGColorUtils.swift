@@ -22,9 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import WolfOSBridge
-import WolfPipe
-
 #if canImport(AppKit)
     import AppKit
 #elseif canImport(UIKit)
@@ -70,9 +67,15 @@ extension CGGradient {
         return new(with: ColorFracGradient([ColorFrac(color1, 0.0), ColorFrac(color2, 1.0)]))
     }
 
-    public static func new(from color1: OSColor, to color2: OSColor) -> CGGradient {
-        return new(from: color1 |> Color.init, to: color2 |> Color.init)
+    #if canImport(UIKit)
+    public static func new(from color1: UIColor, to color2: UIColor) -> CGGradient {
+        return new(from: Color(color1), to: Color(color2))
     }
+    #elseif canImport(AppKit)
+    public static func new(from color1: NSColor, to color2: NSColor) -> CGGradient {
+        return new(from: Color(color1), to: Color(color2))
+    }
+    #endif
 }
 
 extension Color {

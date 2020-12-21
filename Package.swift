@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -11,21 +11,15 @@ let package = Package(
             name: "WolfColor",
             type: .dynamic,
             targets: ["WolfColor"]),
-        ],
+    ],
     dependencies: [
-        .package(url: "https://github.com/wolfmcnally/WolfNumerics", from: "4.0.0"),
-        .package(url: "https://github.com/wolfmcnally/WolfOSBridge", from: "2.0.0"),
-        .package(url: "https://github.com/wolfmcnally/WolfPipe", from: "2.0.0"),
-        .package(url: "https://github.com/wolfmcnally/WolfFoundation", from: "5.0.0"),
+        .package(url: "https://github.com/wolfmcnally/Interpolate", from: "0.0.0")
     ],
     targets: [
         .target(
             name: "WolfColor",
             dependencies: [
-                "WolfNumerics",
-                "WolfOSBridge",
-                "WolfPipe",
-                "WolfFoundation"
-        ])
-        ]
+                "Interpolate",
+            ])
+    ]
 )

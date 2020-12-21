@@ -6,32 +6,31 @@
 //
 
 import Foundation
-import WolfNumerics
 
 public struct HSBColor: Codable {
-    public var c: SIMD4<Frac>
+    public var c: SIMD4<Double>
 
-    @inlinable public var hue: Frac {
+    @inlinable public var hue: Double {
         get { return c[0] }
         set { c[0] = newValue }
     }
 
-    @inlinable public var saturation: Frac {
+    @inlinable public var saturation: Double {
         get { return c[1] }
         set { c[1] = newValue }
     }
 
-    @inlinable public var brightness: Frac {
+    @inlinable public var brightness: Double {
         get { return c[2] }
         set { c[2] = newValue }
     }
 
-    @inlinable public var alpha: Frac {
+    @inlinable public var alpha: Double {
         get { return c[3] }
         set { c[3] = newValue }
     }
 
-    @inlinable public init(hue: Frac, saturation: Frac, brightness: Frac, alpha: Frac = 1) {
+    @inlinable public init(hue: Double, saturation: Double, brightness: Double, alpha: Double = 1) {
         c = [hue, saturation, brightness, alpha]
     }
 
@@ -49,7 +48,7 @@ public struct HSBColor: Codable {
         let d = maxValue - minValue;
         let saturation = maxValue == 0 ? 0 : d / maxValue
 
-        let hue: Frac
+        let hue: Double
         if (maxValue == minValue) {
             hue = 0 // achromatic
         } else {
@@ -66,11 +65,11 @@ public struct HSBColor: Codable {
 
 extension Color {
     public init(_ hsb: HSBColor) {
-        let v = hsb.brightness.clamped()
-        let s = hsb.saturation.clamped()
-        let red: Frac
-        let green: Frac
-        let blue: Frac
+        let v = hsb.brightness.clamped
+        let s = hsb.saturation.clamped
+        let red: Double
+        let green: Double
+        let blue: Double
         let alpha = hsb.alpha
         if s <= 0.0 {
             red = v

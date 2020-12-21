@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import WolfNumerics
-import WolfPipe
 
 public struct LABColor: Codable {
     public var c: SIMD4<Double>
@@ -33,12 +31,12 @@ public struct LABColor: Codable {
         set { c[2] = newValue }
     }
 
-    @inlinable public var alpha: Frac {
+    @inlinable public var alpha: Double {
         get { return c[3] }
         set { c[3] = newValue }
     }
 
-    @inlinable public init(l: Double, a: Double, b: Double, alpha: Frac = 1) {
+    @inlinable public init(l: Double, a: Double, b: Double, alpha: Double = 1) {
         c = [l, a, b, alpha]
     }
 
@@ -106,7 +104,7 @@ public func settingL(to l: Double) -> (_ c: LABColor) -> LABColor {
 
 public func settingL(toMatch source: Color) -> (_ target: Color) -> Color {
     return { target in
-        return target |> toLABColor |> settingL(to: (source |> toLABColor).l) |> toColor
+        return toColor(settingL(to: (toLABColor(source)).l)(toLABColor(target)))
     }
 }
 

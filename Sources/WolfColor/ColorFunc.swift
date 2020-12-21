@@ -22,9 +22,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import WolfNumerics
-import WolfPipe
-
 public struct ColorFuncOptions: OptionSet {
     public let rawValue: UInt32
 
@@ -36,28 +33,28 @@ public struct ColorFuncOptions: OptionSet {
     public static let extendEnd = ColorFuncOptions(rawValue: 1 << 1)
 }
 
-public typealias ColorFunc = (_ at: Frac) -> Color
+public typealias ColorFunc = (_ at: Double) -> Color
 
-public func clamp(at frac: Frac, options: ColorFuncOptions) -> Frac? {
+public func clamp(at frac: Double, options: ColorFuncOptions) -> Double? {
     guard frac >= 0.0 || options.contains(.extendStart) else { return nil }
     guard frac <= 1.0 || options.contains(.extendEnd) else { return nil }
-    return frac.clamped()
+    return frac.clamped
 }
 
-public func blend(from color1: Color, to color2: Color, at frac: Frac, alpha: Frac? = nil) -> Color {
-    let f = frac.clamped()
+public func blend(from color1: Color, to color2: Color, at frac: Double, alpha: Double? = nil) -> Color {
+    let f = frac.clamped
     var c = color1 * (1 - f) + color2 * f
 
     if let alpha = alpha {
         c.alpha = alpha
     } else {
-        c.alpha = f.lerpedFromFrac(to: color1.alpha..color2.alpha)
+        c.alpha = f.interpolate(to: (color1.alpha, color2.alpha))
     }
 
     return c
 }
 
-public func blend(from color1: Color, to color2: Color, at frac: Frac, options: ColorFuncOptions) -> Color {
+public func blend(from color1: Color, to color2: Color, at frac: Double, options: ColorFuncOptions) -> Color {
     guard clamp(at: frac, options: options) != nil else { return .clear }
     return blend(from: color1, to: color2, at: frac)
 }
@@ -121,13 +118,13 @@ public func blend(colorFracs: [ColorFrac], options: ColorFuncOptions = []) -> Co
         return { frac in
             let cf1 = colorFracs[0]
             let cf2 = colorFracs[1]
-            let frac = frac.lerpedToFrac(from: cf1.frac..cf2.frac)
+            let frac = frac.interpolate(from: (cf1.frac, cf2.frac))
             guard let f = clamp(at: frac, options: options) else { return .clear }
             return blend(from: cf1.color, to: cf2.color, at: f)
         }
     default:
         return { frac in
-            let f = frac.lerpedToFrac(from: colorFracs.first!.frac..colorFracs.last!.frac)
+            let f = frac.interpolate(from: (colorFracs.first!.frac, colorFracs.last!.frac))
             guard clamp(at: f, options: options) != nil else { return .clear }
             if frac >= colorFracs.last!.frac {
                 return colorFracs.last!.color
@@ -139,7 +136,7 @@ public func blend(colorFracs: [ColorFrac], options: ColorFuncOptions = []) -> Co
                     let cf1 = colorFracs[segment]
                     let cf2 = colorFracs[segment + 1]
                     if frac >= cf1.frac && frac < cf2.frac {
-                        let f = frac.lerpedToFrac(from: cf1.frac..cf2.frac)
+                        let f = frac.interpolate(from: (cf1.frac, cf2.frac))
                         return blend(from: cf1.color, to: cf2.color, at: f)
                     }
                 }
@@ -167,7 +164,7 @@ public func blend(colorFracHandles: [ColorFracHandle], options: ColorFuncOptions
             let cfh2 = colorFracHandles[index + 1]
             if abs(cfh1.handle - 0.5) > 0.001 {
                 let color12 = blend(from: cfh1.color, to: cfh2.color, at: 0.5)
-                let frac12 = cfh1.handle.lerpedToFrac(from: cfh1.frac..cfh2.frac)
+                let frac12 = cfh1.handle.interpolate(from: (cfh1.frac, cfh2.frac))
                 let colorFrac12 = ColorFrac(color12, frac12)
                 colorFracs.append(colorFrac12)
             }
@@ -179,28 +176,34 @@ public func blend(colorFracHandles: [ColorFracHandle], options: ColorFuncOptions
 }
 
 public func reverse(colorFunc: @escaping ColorFunc) -> ColorFunc {
-    return { (frac: Frac) in
+    return { (frac: Double) in
         return colorFunc(1 - frac)
     }
 }
 
-public func tints(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
+public func tints(hue: Double, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return HSBColor(hue: hue, saturation: 1.0 - f, brightness: 1) |> toColor
+        return Color(HSBColor(hue: hue, saturation: 1.0 - f, brightness: 1))
     }
 }
 
-public func shades(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
+public func shades(hue: Double, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return HSBColor(hue: hue, saturation: 1.0, brightness: 1.0 - f) |> toColor
+        return Color(HSBColor(hue: hue, saturation: 1.0, brightness: 1.0 - f))
     }
 }
 
-public func tones(hue: Frac, options: ColorFuncOptions = []) -> ColorFunc {
+public func tones(hue: Double, options: ColorFuncOptions = []) -> ColorFunc {
     return { frac in
         guard let f = clamp(at: frac, options: options) else { return .clear }
-        return HSBColor(hue: hue, saturation: 1.0 - f, brightness: f.lerpedFromFrac(to: 1.0..0.5)) |> toColor
+        return Color(
+            HSBColor(
+                hue: hue,
+                saturation: 1.0 - f,
+                brightness: f.interpolate(to: (1.0, 0.5))
+            )
+        )
     }
 }
