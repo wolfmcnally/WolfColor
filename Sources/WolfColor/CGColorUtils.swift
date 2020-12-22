@@ -22,10 +22,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#if canImport(AppKit)
-    import AppKit
-#elseif canImport(UIKit)
-    import UIKit
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 import CoreGraphics
