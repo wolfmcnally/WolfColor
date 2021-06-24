@@ -12,7 +12,7 @@ let package = Package(
             targets: ["WolfColor"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/wolfmcnally/Interpolate", from: "0.0.0")
+        .package(url: "https://github.com/wolfmcnally/Interpolate", from: "1.0.0")
     ],
     targets: [
         .target(
