@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 import PackageDescription
 
 let package = Package(
@@ -12,7 +12,7 @@ let package = Package(
             targets: ["WolfColor"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/wolfmcnally/Interpolate", from: "1.0.0")
+        .package(url: "https://github.com/wolfmcnally/Interpolate", from: "2.0.0")
     ],
     targets: [
         .target(
